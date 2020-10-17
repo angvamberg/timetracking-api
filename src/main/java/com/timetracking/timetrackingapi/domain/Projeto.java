@@ -20,7 +20,7 @@ public class Projeto {
     @Column(name = "CD_PROJETO")
     private Long id;
 
-    @Column(name = "DESC", unique = true)
+    @Column(name = "DESCRICAO", unique = true)
     private String descricao;
 
 }

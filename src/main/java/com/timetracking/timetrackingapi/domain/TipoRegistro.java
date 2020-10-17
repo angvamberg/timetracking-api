@@ -23,7 +23,7 @@ public class TipoRegistro {
     @Column(name = "CD_TP_REGISTRO")
     private Long id;
 
-    @Column(name = "DESC", unique = true)
+    @Column(name = "DESCRICAO", unique = true)
     private String descricao;
 
 }

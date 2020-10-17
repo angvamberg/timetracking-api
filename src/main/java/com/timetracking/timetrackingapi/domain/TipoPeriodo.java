@@ -23,7 +23,7 @@ public class TipoPeriodo {
     @Column(name = "CD_TP_PERIODO")
     private Long id;
 
-    @Column(name = "DESC", unique = true)
+    @Column(name = "DESCRICAO", unique = true)
     private String descricao;
 
 }
