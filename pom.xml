@@ -19,6 +19,7 @@
 		<org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
 		<org.apache.maven.plugins>3.8.1</org.apache.maven.plugins>
 		<org.springframework.boot>2.3.4.RELEASE</org.springframework.boot>
+		<com.h2database>1.4.199</com.h2database>
 	</properties>
 
 	<dependencies>
@@ -57,6 +58,12 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+			<version>${com.h2database}</version>
 		</dependency>
 	</dependencies>
 
