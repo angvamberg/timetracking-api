@@ -22,7 +22,7 @@ public class Alocacao {
     private Long id;
 
     @Column(name = "HORAS_ALOCADAS")
-    private int horasAlocadas;
+    private int tempoAlocadoEmMinutos;
 
     @Column(name = "DIA_ALOCACAO")
     private LocalDate diaAlocacao;
