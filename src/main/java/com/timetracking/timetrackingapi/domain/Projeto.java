@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Projeto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_PROJETO")
     private Long id;
 

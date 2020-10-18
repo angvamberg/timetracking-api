@@ -19,7 +19,7 @@ public class TipoPeriodo {
     public static final int VESPERTINO = 2;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_TP_PERIODO")
     private Long id;
 

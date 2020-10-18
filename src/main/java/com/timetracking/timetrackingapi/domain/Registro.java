@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Registro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_REGISTRO")
     private Long id;
 

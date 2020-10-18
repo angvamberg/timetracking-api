@@ -19,7 +19,7 @@ public class TipoRegistro {
     public static final int SAIDA = 2;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_TP_REGISTRO")
     private Long id;
 
