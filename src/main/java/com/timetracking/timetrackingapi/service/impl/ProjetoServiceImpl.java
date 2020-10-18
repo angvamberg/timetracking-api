@@ -1,6 +1,7 @@
 package com.timetracking.timetrackingapi.service.impl;
 
 import com.timetracking.timetrackingapi.domain.Projeto;
+import com.timetracking.timetrackingapi.domain.dto.CadastroProjetoDTO;
 import com.timetracking.timetrackingapi.domain.dto.ProjetoDTO;
 import com.timetracking.timetrackingapi.domain.mapper.ProjetoMapper;
 import com.timetracking.timetrackingapi.repository.ProjetoRepository;
@@ -29,9 +30,9 @@ public class ProjetoServiceImpl implements ProjetoService {
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
-    public ProjetoDTO criarProjeto(ProjetoDTO projetoDTO) {
+    public ProjetoDTO criarProjeto(CadastroProjetoDTO cadastroProjetoDTO) {
         Projeto projeto = Projeto.builder()
-                .descricao(projetoDTO.getDescricao())
+                .descricao(cadastroProjetoDTO.getDescricao())
                 .build();
 
         projetoRepository.saveAndFlush(projeto);

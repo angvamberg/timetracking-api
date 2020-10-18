@@ -1,6 +1,7 @@
 package com.timetracking.timetrackingapi.service.impl;
 
 import com.timetracking.timetrackingapi.domain.Usuario;
+import com.timetracking.timetrackingapi.domain.dto.CadastroUsuarioDTO;
 import com.timetracking.timetrackingapi.domain.dto.UsuarioDTO;
 import com.timetracking.timetrackingapi.domain.mapper.UsuarioMapper;
 import com.timetracking.timetrackingapi.repository.UsuarioRepository;
@@ -29,9 +30,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
-    public UsuarioDTO criarUsuario(UsuarioDTO usuarioDTO) {
+    public UsuarioDTO criarUsuario(CadastroUsuarioDTO cadastroUsuarioDTO) {
         Usuario usuario = Usuario.builder()
-                .nome(usuarioDTO.getNome())
+                .nome(cadastroUsuarioDTO.getNome())
                 .build();
 
         usuarioRepository.saveAndFlush(usuario);
