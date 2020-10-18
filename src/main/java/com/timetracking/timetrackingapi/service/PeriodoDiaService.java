@@ -1,6 +1,6 @@
 package com.timetracking.timetrackingapi.service;
 
-import com.timetracking.timetrackingapi.domain.PeriodoDia;
+import com.timetracking.timetrackingapi.domain.PeriodoTotalDia;
 import com.timetracking.timetrackingapi.domain.Registro;
 import com.timetracking.timetrackingapi.domain.dto.PeriodoCompletoDiaDTO;
 
@@ -10,10 +10,10 @@ public interface PeriodoDiaService {
 
     PeriodoCompletoDiaDTO construirPeriodoDiaDTOPorRegistros(List<Registro> registros);
 
-    PeriodoDia criarPeriodoDiaPorPeriodoCompletoDTO(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
+    PeriodoTotalDia criarPeriodoDiaPorPeriodoCompletoDTO(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
 
-    PeriodoDia criarOuBuscarPeriodoDia(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
+    PeriodoTotalDia criarOuBuscarPeriodoDia(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
 
-    PeriodoDia salvarPeriodoDia(PeriodoDia periodoDia);
+    PeriodoTotalDia salvarPeriodoDia(PeriodoTotalDia periodoTotalDia);
 
 }

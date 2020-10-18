@@ -1,6 +1,6 @@
 package com.timetracking.timetrackingapi.service.impl;
 
-import com.timetracking.timetrackingapi.domain.PeriodoDia;
+import com.timetracking.timetrackingapi.domain.PeriodoTotalDia;
 import com.timetracking.timetrackingapi.domain.Registro;
 import com.timetracking.timetrackingapi.domain.Usuario;
 import com.timetracking.timetrackingapi.domain.dto.PeriodoCompletoDiaDTO;
@@ -78,8 +78,8 @@ public class PeriodoDiaServiceImpl implements PeriodoDiaService {
     }
 
     @Override
-    public PeriodoDia criarPeriodoDiaPorPeriodoCompletoDTO(PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
-        return PeriodoDia.builder()
+    public PeriodoTotalDia criarPeriodoDiaPorPeriodoCompletoDTO(PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
+        return PeriodoTotalDia.builder()
                 .dia(periodoCompletoDiaDTO.getDia())
                 .totalMinutosDoDia(periodoCompletoDiaDTO.getTotalMinutosDoDia())
                 .usuario(Usuario.builder().id(periodoCompletoDiaDTO.getUsuario().getId()).build())
@@ -88,8 +88,8 @@ public class PeriodoDiaServiceImpl implements PeriodoDiaService {
 
     @Override
     @Transactional(readOnly = true)
-    public PeriodoDia criarOuBuscarPeriodoDia(PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
-        Optional<PeriodoDia> periodoDia = periodoDiaRepository.findAllByUsuarioIdAndDia(periodoCompletoDiaDTO.getUsuario().getId(),
+    public PeriodoTotalDia criarOuBuscarPeriodoDia(PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
+        Optional<PeriodoTotalDia> periodoDia = periodoDiaRepository.findAllByUsuarioIdAndDia(periodoCompletoDiaDTO.getUsuario().getId(),
                 periodoCompletoDiaDTO.getDia());
 
         return periodoDia.orElseGet(() -> criarPeriodoDiaPorPeriodoCompletoDTO(periodoCompletoDiaDTO));
@@ -97,11 +97,11 @@ public class PeriodoDiaServiceImpl implements PeriodoDiaService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public PeriodoDia salvarPeriodoDia(PeriodoDia periodoDia) {
-        if (isNull(periodoDia))
+    public PeriodoTotalDia salvarPeriodoDia(PeriodoTotalDia periodoTotalDia) {
+        if (isNull(periodoTotalDia))
             return null;
 
-        return periodoDiaRepository.saveAndFlush(periodoDia);
+        return periodoDiaRepository.saveAndFlush(periodoTotalDia);
     }
 
 }

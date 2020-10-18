@@ -13,12 +13,12 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "TIMETRACKING", name = "PERIODO_DIA")
-public class PeriodoDia {
+@Table(schema = "TIMETRACKING", name = "PERIODO_TOTAL_DIA")
+public class PeriodoTotalDia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CD_PERIODO_DIA")
+    @Column(name = "CD_PERIODO_TOTAL_DIA")
     private Long id;
 
     @Column(name = "DIA")

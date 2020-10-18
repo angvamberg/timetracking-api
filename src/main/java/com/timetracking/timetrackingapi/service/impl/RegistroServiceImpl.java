@@ -55,9 +55,9 @@ public class RegistroServiceImpl implements RegistroService {
         validarSeRegistroSobrepoePeriodo(registro, periodoDiaDTO);
 
         registroRepository.saveAndFlush(registro);
-        PeriodoDia periodoDia = periodoDiaService.criarOuBuscarPeriodoDia(periodoDiaDTO);
-        periodoDia.setTotalMinutosDoDia(periodoDiaDTO.getTotalMinutosDoDia());
-        periodoDiaService.salvarPeriodoDia(periodoDia);
+        PeriodoTotalDia periodoTotalDia = periodoDiaService.criarOuBuscarPeriodoDia(periodoDiaDTO);
+        periodoTotalDia.setTotalMinutosDoDia(periodoDiaDTO.getTotalMinutosDoDia());
+        periodoDiaService.salvarPeriodoDia(periodoTotalDia);
 
         return registroMapper.paraRegistroDTO(registro);
     }
