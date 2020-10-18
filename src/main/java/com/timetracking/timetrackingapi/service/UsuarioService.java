@@ -1,5 +1,6 @@
 package com.timetracking.timetrackingapi.service;
 
+import com.timetracking.timetrackingapi.domain.Usuario;
 import com.timetracking.timetrackingapi.domain.dto.CadastroUsuarioDTO;
 import com.timetracking.timetrackingapi.domain.dto.UsuarioDTO;
 
@@ -9,6 +10,8 @@ public interface UsuarioService {
 
     List<UsuarioDTO> listarUsuarios();
 
-    UsuarioDTO criarUsuario(CadastroUsuarioDTO cadastroUsuarioDTO);
+    UsuarioDTO salvarUsuario(CadastroUsuarioDTO cadastroUsuarioDTO);
+
+    Usuario obterUsuarioPorId(Long id);
 
 }

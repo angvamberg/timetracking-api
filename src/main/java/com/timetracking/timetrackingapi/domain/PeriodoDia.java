@@ -13,26 +13,22 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "TIMETRACKING", name = "ALOCACAO")
-public class Alocacao {
+@Table(schema = "TIMETRACKING", name = "PERIODO_DIA")
+public class PeriodoDia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CD_ALOCACAO")
+    @Column(name = "CD_PERIODO_DIA")
     private Long id;
 
-    @Column(name = "HORAS_ALOCADAS")
-    private Long tempoAlocadoEmMinutos;
+    @Column(name = "DIA")
+    private LocalDate dia;
 
-    @Column(name = "DIA_ALOCACAO")
-    private LocalDate diaAlocacao;
+    @Column(name = "TOTAL_MINUTOS_DIA")
+    private Long totalMinutosDoDia;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CD_USUARIO")
     private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CD_PROJETO")
-    private Projeto projeto;
 
 }

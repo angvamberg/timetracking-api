@@ -15,15 +15,23 @@ import javax.persistence.*;
 @Table(schema = "TIMETRACKING", name = "TIPO_REGISTRO")
 public class TipoRegistro {
 
-    public static final int ENTRADA = 1;
-    public static final int SAIDA = 2;
+    public static final Integer ENTRADA = 1;
+    public static final Integer SAIDA = 2;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_TP_REGISTRO")
-    private Long id;
+    private Integer id;
 
     @Column(name = "DESCRICAO", unique = true)
     private String descricao;
+
+    public boolean isEntrada() {
+        return this.getId().equals(ENTRADA);
+    }
+
+    public boolean isSaida() {
+        return this.getId().equals(SAIDA);
+    }
 
 }

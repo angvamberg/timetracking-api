@@ -9,6 +9,6 @@ public interface ProjetoService {
 
     List<ProjetoDTO> listarProjetos();
 
-    ProjetoDTO criarProjeto(CadastroProjetoDTO cadastroProjetoDTO);
+    ProjetoDTO salvarProjeto(CadastroProjetoDTO cadastroProjetoDTO);
 
 }

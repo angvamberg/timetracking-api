@@ -30,7 +30,7 @@ public class ProjetoServiceImpl implements ProjetoService {
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
-    public ProjetoDTO criarProjeto(CadastroProjetoDTO cadastroProjetoDTO) {
+    public ProjetoDTO salvarProjeto(CadastroProjetoDTO cadastroProjetoDTO) {
         Projeto projeto = Projeto.builder()
                 .descricao(cadastroProjetoDTO.getDescricao())
                 .build();

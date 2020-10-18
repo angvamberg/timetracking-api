@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.timetracking.timetrackingapi.service.util.MessageLoader.mensagemNaoEncontrado;
+
 @Service
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
@@ -30,7 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
-    public UsuarioDTO criarUsuario(CadastroUsuarioDTO cadastroUsuarioDTO) {
+    public UsuarioDTO salvarUsuario(CadastroUsuarioDTO cadastroUsuarioDTO) {
         Usuario usuario = Usuario.builder()
                 .nome(cadastroUsuarioDTO.getNome())
                 .build();
@@ -38,5 +40,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.saveAndFlush(usuario);
 
         return usuarioMapper.paraUsuarioDTO(usuario);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Usuario obterUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> mensagemNaoEncontrado("Usuário"));
     }
 }

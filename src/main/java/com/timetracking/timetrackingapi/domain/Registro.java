@@ -1,6 +1,9 @@
 package com.timetracking.timetrackingapi.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,13 +16,16 @@ import java.time.LocalDateTime;
 @Table(schema = "TIMETRACKING", name = "REGISTRO")
 public class Registro {
 
+    public static final int TOTAL_MAX_REGISTROS_POR_DIA = 4;
+    public static final int TOTAL_MAX_REGISTROS_POR_PERIODO = 2;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_REGISTRO")
     private Long id;
 
-    @Column(name = "HORARIO")
-    private LocalDateTime horario;
+    @Column(name = "DATA_HORARIO")
+    private LocalDateTime dataHorario;
 
     @ManyToOne
     @JoinColumn(name = "CD_TP_PERIODO")
