@@ -3,7 +3,6 @@ package com.timetracking.timetrackingapi.web.rest;
 import com.timetracking.timetrackingapi.domain.dto.CadastroUsuarioDTO;
 import com.timetracking.timetrackingapi.domain.dto.UsuarioDTO;
 import com.timetracking.timetrackingapi.service.UsuarioService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,8 +26,8 @@ public class UsuarioResource {
 
     @PostMapping
     @ApiOperation(value = "Cadastra um novo usuário")
-    public ResponseEntity<UsuarioDTO> criarUsuario(@RequestBody CadastroUsuarioDTO cadastroUsuarioDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(cadastroUsuarioDTO));
+    public ResponseEntity<UsuarioDTO> salvarUsuario(@RequestBody CadastroUsuarioDTO cadastroUsuarioDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(cadastroUsuarioDTO));
     }
 
 }
