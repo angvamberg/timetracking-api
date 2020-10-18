@@ -22,7 +22,7 @@ public class ProjetoResource {
     }
 
     @PostMapping
-    public ResponseEntity<ProjetoDTO> listarProjetos(@RequestBody ProjetoDTO projetoDTO) {
+    public ResponseEntity<ProjetoDTO> criarProjeto(@RequestBody ProjetoDTO projetoDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projetoService.criarProjeto(projetoDTO));
     }
 

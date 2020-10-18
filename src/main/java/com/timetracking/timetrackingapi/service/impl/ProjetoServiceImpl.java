@@ -7,6 +7,8 @@ import com.timetracking.timetrackingapi.repository.ProjetoRepository;
 import com.timetracking.timetrackingapi.service.ProjetoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,12 +21,14 @@ public class ProjetoServiceImpl implements ProjetoService {
     private ProjetoMapper projetoMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProjetoDTO> listarProjetos() {
         List<Projeto> projetos = projetoRepository.findAll();
         return projetoMapper.paraProjetosDTOList(projetos);
     }
 
     @Override
+    @Transactional(propagation= Propagation.REQUIRED)
     public ProjetoDTO criarProjeto(ProjetoDTO projetoDTO) {
         Projeto projeto = Projeto.builder()
                 .descricao(projetoDTO.getDescricao())
