@@ -1,5 +1,6 @@
 package com.timetracking.timetrackingapi.service;
 
+import com.timetracking.timetrackingapi.domain.dto.AlterarRegistroDTO;
 import com.timetracking.timetrackingapi.domain.dto.CadastroRegistroDTO;
 import com.timetracking.timetrackingapi.domain.dto.RegistroDTO;
 import com.timetracking.timetrackingapi.domain.dto.RelatorioDTO;
@@ -13,4 +14,6 @@ public interface RegistroService {
     List<RegistroDTO> listarRegistrosPorUsuarioEMesAno(Long idUsuario, String mesAno);
 
     RelatorioDTO obterRelatorioParaUsuarioEMesAno(Long idUsuario, String mesAno);
+
+    RegistroDTO editarRegistro(Long idRegistro, AlterarRegistroDTO alterarRegistroDTO);
 }

@@ -22,6 +22,7 @@ import static com.timetracking.timetrackingapi.domain.TipoPeriodo.VESPERTINO;
 import static com.timetracking.timetrackingapi.domain.TipoRegistro.SAIDA;
 import static com.timetracking.timetrackingapi.service.util.DataUtil.*;
 import static com.timetracking.timetrackingapi.service.util.MessageLoader.getMessage;
+import static com.timetracking.timetrackingapi.service.util.MessageLoader.mensagemNaoEncontrado;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -53,12 +54,40 @@ public class RegistroServiceImpl implements RegistroService {
         PeriodoCompletoDiaDTO periodoDiaDTO = validarSeHaTempoMinimoDeAlmoco(registro, registrosJaCadastradosParaODia);
         validarSeRegistroSobrepoePeriodo(registro, periodoDiaDTO);
 
+        salvarRegistroEPeriodoDia(registro, periodoDiaDTO);
+
+        return registroMapper.paraRegistroDTO(registro);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public RegistroDTO editarRegistro(Long idRegistro, AlterarRegistroDTO alterarRegistroDTO) {
+        final Usuario usuario = usuarioService.obterUsuarioPorId(alterarRegistroDTO.getUsuario());
+        Registro registro = obterRegistroPorId(idRegistro);
+        registro.setDataHorario(transformarStringDataHoraParaLocalDateTime(transformarLocalDateParaString(registro.getDataHorario().toLocalDate()) + " " +
+                alterarRegistroDTO.getHorario()));
+        List<Registro> registrosJaCadastradosParaODia = obterRegistrosDeUmPeriodoEUsuario(usuario, registro);
+        registrosJaCadastradosParaODia.remove(registro);
+
+        validarSeRegistroEhFinalDeSemana(registro);
+        validarSeHoraEntradaEhMaiorQueHoraSaida(registro, registrosJaCadastradosParaODia);
+        PeriodoCompletoDiaDTO periodoDiaDTO = validarSeHaTempoMinimoDeAlmoco(registro, registrosJaCadastradosParaODia);
+        validarSeRegistroSobrepoePeriodo(registro, periodoDiaDTO);
+
+        salvarRegistroEPeriodoDia(registro, periodoDiaDTO);
+
+        return registroMapper.paraRegistroDTO(registro);
+    }
+
+    private void salvarRegistroEPeriodoDia(Registro registro, PeriodoCompletoDiaDTO periodoDiaDTO) {
         registroRepository.saveAndFlush(registro);
         PeriodoTotalDia periodoTotalDia = periodoDiaService.criarOuBuscarPeriodoDia(periodoDiaDTO);
         periodoTotalDia.setTotalMinutosDoDia(periodoDiaDTO.getTotalMinutosDoDia());
         periodoDiaService.salvarPeriodoDia(periodoTotalDia);
+    }
 
-        return registroMapper.paraRegistroDTO(registro);
+    private Registro obterRegistroPorId(Long idRegistro) {
+        return registroRepository.findById(idRegistro).orElseThrow(() -> mensagemNaoEncontrado("Registro"));
     }
 
     @Override

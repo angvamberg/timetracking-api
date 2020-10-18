@@ -51,6 +51,12 @@ public class DataUtil {
         return LocalDate.parse(data, DATE_FORMAT);
     }
 
+    public static String transformarLocalDateParaString(LocalDate data) {
+        if (isNull(data))
+            return null;
+        return data.format(DATE_FORMAT);
+    }
+
     public static LocalDate retornarPrimeiroDiaDoMesPorLocalDate(LocalDate data) {
         if (isNull(data))
             return null;
