@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 import static com.timetracking.timetrackingapi.domain.Registro.TOTAL_MAX_REGISTROS_POR_DIA;
+import static com.timetracking.timetrackingapi.domain.Registro.TOTAL_MAX_REGISTROS_POR_PERIODO;
 import static com.timetracking.timetrackingapi.domain.TipoPeriodo.MATUTINO;
 import static com.timetracking.timetrackingapi.domain.TipoPeriodo.VESPERTINO;
 import static com.timetracking.timetrackingapi.domain.TipoRegistro.SAIDA;
@@ -68,7 +68,7 @@ public class RegistroServiceImpl implements RegistroService {
     @Transactional(readOnly = true)
     public List<RegistroDTO> listarRegistrosPorUsuarioEMesAno(Long idUsuario, String mesAno) {
         Usuario usuario = usuarioService.obterUsuarioPorId(idUsuario);
-        LocalDate data = transformarStringDataParaLocalDateTime("01/" + mesAno.replace("-", "/"));
+        LocalDate data = transformarStringDataParaLocalDate("01/" + mesAno.replace("-", "/"));
         assert data != null;
         LocalDate primeiroDiaDoMes = retornarPrimeiroDiaDoMesPorLocalDate(data);
         LocalDate ultimoDiaDoMes = retornarUltimoDiaDoMesPorLocalDate(data);
@@ -84,7 +84,7 @@ public class RegistroServiceImpl implements RegistroService {
             Integer count = registroRepository.countAllByDataHorarioBetweenAndUsuarioIdAndTipoPeriodoId(registro.getDataHorario().with(LocalTime.MIN),
                     registro.getDataHorario().with(LocalTime.MAX), periodoCompletoDiaDTO.getUsuario().getId(), VESPERTINO);
 
-            if (count.equals(2) && registro.getDataHorario().isAfter(periodoCompletoDiaDTO.getEntradaTarde()) &&
+            if (count.equals(TOTAL_MAX_REGISTROS_POR_PERIODO) && registro.getDataHorario().isAfter(periodoCompletoDiaDTO.getEntradaTarde()) &&
                 registro.getDataHorario().isBefore(periodoCompletoDiaDTO.getSaidaTarde())) {
                     throw new ValidacaoException(getMessage("msg.erro.registro.06"));
             }
@@ -94,7 +94,7 @@ public class RegistroServiceImpl implements RegistroService {
             Integer count = registroRepository.countAllByDataHorarioBetweenAndUsuarioIdAndTipoPeriodoId(registro.getDataHorario().with(LocalTime.MIN),
                     registro.getDataHorario().with(LocalTime.MAX), periodoCompletoDiaDTO.getUsuario().getId(), MATUTINO);
 
-            if (count.equals(2) && registro.getDataHorario().isAfter(periodoCompletoDiaDTO.getEntradaManha()) &&
+            if (count.equals(TOTAL_MAX_REGISTROS_POR_PERIODO) && registro.getDataHorario().isAfter(periodoCompletoDiaDTO.getEntradaManha()) &&
                         registro.getDataHorario().isBefore(periodoCompletoDiaDTO.getSaidaManha())) {
                     throw new ValidacaoException(getMessage("msg.erro.registro.06"));
             }

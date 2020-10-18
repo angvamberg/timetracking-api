@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -93,6 +94,13 @@ public class PeriodoDiaServiceImpl implements PeriodoDiaService {
                 periodoCompletoDiaDTO.getDia());
 
         return periodoDia.orElseGet(() -> criarPeriodoDiaPorPeriodoCompletoDTO(periodoCompletoDiaDTO));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PeriodoTotalDia buscarPeriodoDia(Long idUsuario, LocalDate dia) {
+        Optional<PeriodoTotalDia> periodoTotalDia = periodoDiaRepository.findAllByUsuarioIdAndDia(idUsuario, dia);
+        return periodoTotalDia.orElse(null);
     }
 
     @Override

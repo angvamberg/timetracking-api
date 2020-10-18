@@ -26,7 +26,7 @@ public class ProjetoResource {
 
     @PostMapping
     @ApiOperation(value = "Cadastra um novo projeto")
-    public ResponseEntity<ProjetoDTO> criarProjeto(@RequestBody CadastroProjetoDTO cadastroProjetoDTO) {
+    public ResponseEntity<ProjetoDTO> salvarProjeto(@RequestBody CadastroProjetoDTO cadastroProjetoDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(projetoService.salvarProjeto(cadastroProjetoDTO));
     }
 

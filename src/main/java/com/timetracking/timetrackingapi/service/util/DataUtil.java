@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.Objects.isNull;
 
@@ -44,7 +45,7 @@ public class DataUtil {
         return LocalDateTime.parse(data, obterSimpleDateFormat(pattern));
     }
 
-    public static LocalDate transformarStringDataParaLocalDateTime(String data) {
+    public static LocalDate transformarStringDataParaLocalDate(String data) {
         if (isNull(data))
             return null;
         return LocalDate.parse(data, DATE_FORMAT);
@@ -60,5 +61,20 @@ public class DataUtil {
         if (isNull(data))
             return null;
         return data.with(TemporalAdjusters.lastDayOfMonth());
+    }
+
+    public static Long transformarStringHorasEmMinutos(String tempoEmHora) {
+        String[] partes = tempoEmHora.split(":");
+
+        long hora = Long.parseLong(partes[0]);
+        long min = Long.parseLong(partes[1]);
+
+        return (hora * 60) + min;
+    }
+
+    public static String transformarMinutosEmStringHora(Long minutos) {
+        long hours = TimeUnit.MINUTES.toHours(Long.valueOf(minutos));
+        long remainMinutes = minutos - TimeUnit.HOURS.toMinutes(hours);
+        return String.format("%02d:%02d", hours, remainMinutes);
     }
 }
