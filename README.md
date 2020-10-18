@@ -7,13 +7,13 @@ Trata-se de uma API para gerenciamento de horas trabalhadas.
 
 ## Índice
 <p align="center">
- <a href="##objetivo">Instalação</a> •
- <a href="##roadmap">API Endpoints</a> • 
- <a href="##tecnologias">Sobre</a> • 
- <a href="##contribuicao">Licença</a> 
+ <a href="#instalacao">Instalacao</a> •
+ <a href="#api-endpoints">API Endpoints</a> • 
+ <a href="#sobre">Sobre</a> • 
+ <a href="#licenca">Licenca</a> 
 </p>
 
-## Instalação
+## Instalacao
 
 Para rodar o projeto é necessário executar os seguintes comandos na pasta do projeto:
 
@@ -44,5 +44,5 @@ Além disso, pode ser encontrado no início deste README um botão com chamadas 
 ## Sobre
 Esta API foi criada com intuito de atender o desafio backend proposto pela AIS Digital.
 
-## Licença
+## Licenca
 [MIT](https://choosealicense.com/licenses/mit/)
