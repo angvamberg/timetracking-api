@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,5 +14,9 @@ public interface PeriodoDiaRepository extends JpaRepository<PeriodoTotalDia, Lon
 
     Optional<PeriodoTotalDia> findAllByUsuarioIdAndDia(@Param("idUsuario") Long idUsuario,
                                                        @Param("dia")LocalDate dia);
+
+    List<PeriodoTotalDia> findAllByUsuarioIdAndDiaBetween(@Param("idUsuario") Long idUsuario,
+                                                          @Param("dataInicio")LocalDate dataInicio,
+                                                          @Param("dataFim")LocalDate dataFim);
 
 }

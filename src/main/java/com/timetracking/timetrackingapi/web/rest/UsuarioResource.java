@@ -37,9 +37,20 @@ public class UsuarioResource {
     @GetMapping("/{idUsuario}/registros/{mesAno}")
     @ApiOperation(value = "Retorna uma listagem com os registros do usuário a partir de um determinado mês/ano")
     public ResponseEntity<?> listarRegistrosPorUsuarioEMesAno(@PathVariable("idUsuario") Long idUsuario,
-                                                                             @PathVariable("mesAno") String mesAno) {
+                                                              @PathVariable("mesAno") String mesAno) {
         try {
             return ResponseEntity.ok(registroService.listarRegistrosPorUsuarioEMesAno(idUsuario, mesAno));
+        } catch (ValidacaoException validaE) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MensagemDTO.builder().mensagem(validaE.getMessage()).build());
+        }
+    }
+
+    @GetMapping("/{idUsuario}/relatorios/{mesAno}")
+    @ApiOperation(value = "Retorna uma listagem com os registros do usuário a partir de um determinado mês/ano")
+    public ResponseEntity<?> obterRelatorioParaUsuarioEMesAno(@PathVariable("idUsuario") Long idUsuario,
+                                                              @PathVariable("mesAno") String mesAno) {
+        try {
+            return ResponseEntity.ok(registroService.obterRelatorioParaUsuarioEMesAno(idUsuario, mesAno));
         } catch (ValidacaoException validaE) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MensagemDTO.builder().mensagem(validaE.getMessage()).build());
         }

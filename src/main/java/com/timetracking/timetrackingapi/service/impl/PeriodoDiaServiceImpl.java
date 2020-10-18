@@ -104,12 +104,28 @@ public class PeriodoDiaServiceImpl implements PeriodoDiaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<PeriodoTotalDia> buscarPeriodoDiaListParaUsuarioPeriodo(Long idUsuario, LocalDate dataInicio, LocalDate dataFim) {
+        List<PeriodoTotalDia> periodoTotalDiaList = periodoDiaRepository.findAllByUsuarioIdAndDiaBetween(idUsuario, dataInicio, dataFim);
+        return periodoTotalDiaList;
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public PeriodoTotalDia salvarPeriodoDia(PeriodoTotalDia periodoTotalDia) {
         if (isNull(periodoTotalDia))
             return null;
 
         return periodoDiaRepository.saveAndFlush(periodoTotalDia);
+    }
+
+    @Override
+    public long contabilizarTotalMinutosTrabalhadasPorPeriodoTotalDiaList(List<PeriodoTotalDia> periodoTotalDias) {
+        long count = 0;
+        for (PeriodoTotalDia periodoTotalDia : periodoTotalDias)
+            count += periodoTotalDia.getTotalMinutosDoDia();
+
+        return count;
     }
 
 }

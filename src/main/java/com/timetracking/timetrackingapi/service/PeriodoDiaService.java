@@ -17,6 +17,9 @@ public interface PeriodoDiaService {
 
     PeriodoTotalDia buscarPeriodoDia(Long idUsuario, LocalDate dia);
 
+    List<PeriodoTotalDia> buscarPeriodoDiaListParaUsuarioPeriodo(Long idUsuario, LocalDate dataInicio, LocalDate dataFim);
+
     PeriodoTotalDia salvarPeriodoDia(PeriodoTotalDia periodoTotalDia);
 
+    long contabilizarTotalMinutosTrabalhadasPorPeriodoTotalDiaList(List<PeriodoTotalDia> periodoTotalDias);
 }

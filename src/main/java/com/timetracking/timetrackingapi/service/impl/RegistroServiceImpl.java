@@ -1,10 +1,7 @@
 package com.timetracking.timetrackingapi.service.impl;
 
 import com.timetracking.timetrackingapi.domain.*;
-import com.timetracking.timetrackingapi.domain.dto.CadastroRegistroDTO;
-import com.timetracking.timetrackingapi.domain.dto.PeriodoCompletoDiaDTO;
-import com.timetracking.timetrackingapi.domain.dto.RegistroDTO;
-import com.timetracking.timetrackingapi.domain.dto.UsuarioDTO;
+import com.timetracking.timetrackingapi.domain.dto.*;
 import com.timetracking.timetrackingapi.domain.mapper.RegistroMapper;
 import com.timetracking.timetrackingapi.repository.RegistroRepository;
 import com.timetracking.timetrackingapi.service.*;
@@ -77,6 +74,35 @@ public class RegistroServiceImpl implements RegistroService {
         List<Registro> registros = registroRepository.findAllByDataHorarioBetweenAndUsuarioId(primeiroDiaDoMes.atStartOfDay().with(LocalTime.MIN),
                 ultimoDiaDoMes.atStartOfDay().with(LocalTime.MAX), usuario.getId());
         return registroMapper.paraRegistrosDTOList(registros);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RelatorioDTO obterRelatorioParaUsuarioEMesAno(Long idUsuario, String mesAno) {
+        Usuario usuario = usuarioService.obterUsuarioPorId(idUsuario);
+        LocalDate data = transformarStringDataParaLocalDate("01/" + mesAno.replace("-", "/"));
+        assert data != null;
+        LocalDate primeiroDiaDoMes = retornarPrimeiroDiaDoMesPorLocalDate(data);
+        LocalDate ultimoDiaDoMes = retornarUltimoDiaDoMesPorLocalDate(data);
+        assert primeiroDiaDoMes != null;
+        assert ultimoDiaDoMes != null;
+        List<PeriodoTotalDia> periodoTotalDias = periodoDiaService.buscarPeriodoDiaListParaUsuarioPeriodo(usuario.getId(), primeiroDiaDoMes, ultimoDiaDoMes);
+
+        Long horasNecessariasNoMes = countDiasDaSemanaEntreDuasDatas(primeiroDiaDoMes, ultimoDiaDoMes) * 8;
+        long minutosTrabalhadasNoMes = periodoDiaService.contabilizarTotalMinutosTrabalhadasPorPeriodoTotalDiaList(periodoTotalDias);
+        long minutosDevidos = contabilizarMinutosDevidos(horasNecessariasNoMes, minutosTrabalhadasNoMes);
+
+        return RelatorioDTO.builder()
+                .mesAno(mesAno.replace("-", "/"))
+                .horasNecessarias(horasNecessariasNoMes.toString() + ":00")
+                .horasTrabalhadas(transformarMinutosEmStringHora(minutosTrabalhadasNoMes))
+                .horasDevidas(transformarMinutosEmStringHora(minutosDevidos))
+                .usuario(usuario.getId())
+                .build();
+    }
+
+    private long contabilizarMinutosDevidos(long horasNecessariasNoMes, long minutosTrabalhadasNoMes) {
+        return transformarHorasSemMinutosEmMinutos(horasNecessariasNoMes) - minutosTrabalhadasNoMes;
     }
 
     private void validarSeRegistroSobrepoePeriodo(Registro registro, PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {

@@ -72,9 +72,23 @@ public class DataUtil {
         return (hora * 60) + min;
     }
 
+    public static Long transformarHorasSemMinutosEmMinutos(long horas) {
+        return horas * 60;
+    }
+
     public static String transformarMinutosEmStringHora(Long minutos) {
         long hours = TimeUnit.MINUTES.toHours(Long.valueOf(minutos));
         long remainMinutes = minutos - TimeUnit.HOURS.toMinutes(hours);
         return String.format("%02d:%02d", hours, remainMinutes);
+    }
+
+    public static long countDiasDaSemanaEntreDuasDatas(final LocalDate inicio, final LocalDate fim) {
+        final DayOfWeek inicioS = inicio.getDayOfWeek();
+        final DayOfWeek finalS = fim.getDayOfWeek();
+
+        final long dias = ChronoUnit.DAYS.between(inicio, fim);
+        final long diasSemFinaisDeSemana = dias - 2 * ((dias + inicioS.getValue())/7);
+
+        return diasSemFinaisDeSemana + (inicioS == DayOfWeek.SUNDAY ? 1 : 0) + (finalS == DayOfWeek.SUNDAY ? 1 : 0);
     }
 }
