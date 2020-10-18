@@ -18,8 +18,9 @@ Trata-se de uma API para gerenciamento de horas trabalhadas.
 Para rodar o projeto é necessário executar os seguintes comandos na pasta do projeto:
 
 ```bash
-mvn clean
-mvn install
+./mvnw clean
+./mvnw install
+./mvnw spring-boot:run
 ```
 
 É necessário também configurar as seguintes variáveis de ambiente para acesso ao banco em memória H2.
