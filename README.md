@@ -63,7 +63,8 @@ Esta API foi criada com intuito de atender o desafio backend proposto pela AIS D
  <li>Swagger</li>
  <li>GitMoji</li>
  <li>SpringBoot, SpringData, SpringMVC</li>
-<ul>
+</ul>
+
 
 ## Consideracoes
 O desafio, apesar de uma proposta simples, não é de fato trivial. A criação do projeto por completo envolveu várias habilidades como: tratamento e manipulação de datas, validação de regras de negócio, mapeamento de entidades, documentação, versionamento, testes, e principalmente, o design de uma API a partir de um problema.
@@ -73,6 +74,7 @@ O curto período de tempo para desenvolvimento também faz com que priorizemos c
 Experimentei utilizar alguns recursos que ainda não havia utilizado como MapStruct e Gitmoji, e cairam como uma luva!
 
 Por fim, foram dois dias intensos (😅) e muito válidos.
+
 
 ## Licenca
 [MIT](https://choosealicense.com/licenses/mit/)
