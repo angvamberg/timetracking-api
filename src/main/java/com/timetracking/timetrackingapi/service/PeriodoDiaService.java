@@ -12,7 +12,7 @@ public interface PeriodoDiaService {
 
     PeriodoDia criarPeriodoDiaPorPeriodoCompletoDTO(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
 
-    PeriodoDia criarOuBuscarPeriodoDiaAlterandoTotalMinutos(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
+    PeriodoDia criarOuBuscarPeriodoDia(PeriodoCompletoDiaDTO periodoCompletoDiaDTO);
 
     PeriodoDia salvarPeriodoDia(PeriodoDia periodoDia);
 

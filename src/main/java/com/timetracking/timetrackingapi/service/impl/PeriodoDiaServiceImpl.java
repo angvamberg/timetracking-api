@@ -88,16 +88,11 @@ public class PeriodoDiaServiceImpl implements PeriodoDiaService {
 
     @Override
     @Transactional(readOnly = true)
-    public PeriodoDia criarOuBuscarPeriodoDiaAlterandoTotalMinutos(PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
+    public PeriodoDia criarOuBuscarPeriodoDia(PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
         Optional<PeriodoDia> periodoDia = periodoDiaRepository.findAllByUsuarioIdAndDia(periodoCompletoDiaDTO.getUsuario().getId(),
                 periodoCompletoDiaDTO.getDia());
 
-        if (periodoDia.isPresent()) {
-            periodoDia.get().setTotalMinutosDoDia(periodoCompletoDiaDTO.getTotalMinutosDoDia());
-            return periodoDia.get();
-        }
-
-        return criarPeriodoDiaPorPeriodoCompletoDTO(periodoCompletoDiaDTO);
+        return periodoDia.orElseGet(() -> criarPeriodoDiaPorPeriodoCompletoDTO(periodoCompletoDiaDTO));
     }
 
     @Override
