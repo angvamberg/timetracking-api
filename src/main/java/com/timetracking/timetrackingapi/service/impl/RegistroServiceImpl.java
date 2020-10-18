@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -60,6 +62,21 @@ public class RegistroServiceImpl implements RegistroService {
         periodoDiaService.salvarPeriodoDia(periodoTotalDia);
 
         return registroMapper.paraRegistroDTO(registro);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RegistroDTO> listarRegistrosPorUsuarioEMesAno(Long idUsuario, String mesAno) {
+        Usuario usuario = usuarioService.obterUsuarioPorId(idUsuario);
+        LocalDate data = transformarStringDataParaLocalDateTime("01/" + mesAno.replace("-", "/"));
+        assert data != null;
+        LocalDate primeiroDiaDoMes = retornarPrimeiroDiaDoMesPorLocalDate(data);
+        LocalDate ultimoDiaDoMes = retornarUltimoDiaDoMesPorLocalDate(data);
+        assert primeiroDiaDoMes != null;
+        assert ultimoDiaDoMes != null;
+        List<Registro> registros = registroRepository.findAllByDataHorarioBetweenAndUsuarioId(primeiroDiaDoMes.atStartOfDay().with(LocalTime.MIN),
+                ultimoDiaDoMes.atStartOfDay().with(LocalTime.MAX), usuario.getId());
+        return registroMapper.paraRegistrosDTOList(registros);
     }
 
     private void validarSeRegistroSobrepoePeriodo(Registro registro, PeriodoCompletoDiaDTO periodoCompletoDiaDTO) {
