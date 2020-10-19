@@ -95,11 +95,8 @@ public class RegistroServiceImpl implements RegistroService {
     public List<RegistroDTO> listarRegistrosPorUsuarioEMesAno(Long idUsuario, String mesAno) {
         Usuario usuario = usuarioService.obterUsuarioPorId(idUsuario);
         LocalDate data = transformarStringDataParaLocalDate("01/" + mesAno.replace("-", "/"));
-        assert data != null;
         LocalDate primeiroDiaDoMes = retornarPrimeiroDiaDoMesPorLocalDate(data);
         LocalDate ultimoDiaDoMes = retornarUltimoDiaDoMesPorLocalDate(data);
-        assert primeiroDiaDoMes != null;
-        assert ultimoDiaDoMes != null;
         List<Registro> registros = registroRepository.findAllByDataHorarioBetweenAndUsuarioId(primeiroDiaDoMes.atStartOfDay().with(LocalTime.MIN),
                 ultimoDiaDoMes.atStartOfDay().with(LocalTime.MAX), usuario.getId());
         return registroMapper.paraRegistrosDTOList(registros);
@@ -110,11 +107,8 @@ public class RegistroServiceImpl implements RegistroService {
     public RelatorioDTO obterRelatorioParaUsuarioEMesAno(Long idUsuario, String mesAno) {
         Usuario usuario = usuarioService.obterUsuarioPorId(idUsuario);
         LocalDate data = transformarStringDataParaLocalDate("01/" + mesAno.replace("-", "/"));
-        assert data != null;
         LocalDate primeiroDiaDoMes = retornarPrimeiroDiaDoMesPorLocalDate(data);
         LocalDate ultimoDiaDoMes = retornarUltimoDiaDoMesPorLocalDate(data);
-        assert primeiroDiaDoMes != null;
-        assert ultimoDiaDoMes != null;
         List<PeriodoTotalDia> periodoTotalDias = periodoDiaService.buscarPeriodoDiaListParaUsuarioPeriodo(usuario.getId(), primeiroDiaDoMes, ultimoDiaDoMes);
 
         Long horasNecessariasNoMes = countDiasDaSemanaEntreDuasDatas(primeiroDiaDoMes, ultimoDiaDoMes) * 8;
@@ -140,8 +134,8 @@ public class RegistroServiceImpl implements RegistroService {
                     registro.getDataHorario().with(LocalTime.MAX), periodoCompletoDiaDTO.getUsuario().getId(), VESPERTINO);
 
             if (count.equals(TOTAL_MAX_REGISTROS_POR_PERIODO) && registro.getDataHorario().isAfter(periodoCompletoDiaDTO.getEntradaTarde()) &&
-                registro.getDataHorario().isBefore(periodoCompletoDiaDTO.getSaidaTarde())) {
-                    throw new ValidacaoException(getMessage("msg.erro.registro.06"));
+                    registro.getDataHorario().isBefore(periodoCompletoDiaDTO.getSaidaTarde())) {
+                throw new ValidacaoException(getMessage("msg.erro.registro.06"));
             }
         }
 
@@ -150,8 +144,8 @@ public class RegistroServiceImpl implements RegistroService {
                     registro.getDataHorario().with(LocalTime.MAX), periodoCompletoDiaDTO.getUsuario().getId(), MATUTINO);
 
             if (count.equals(TOTAL_MAX_REGISTROS_POR_PERIODO) && registro.getDataHorario().isAfter(periodoCompletoDiaDTO.getEntradaManha()) &&
-                        registro.getDataHorario().isBefore(periodoCompletoDiaDTO.getSaidaManha())) {
-                    throw new ValidacaoException(getMessage("msg.erro.registro.06"));
+                    registro.getDataHorario().isBefore(periodoCompletoDiaDTO.getSaidaManha())) {
+                throw new ValidacaoException(getMessage("msg.erro.registro.06"));
             }
         }
     }
@@ -202,7 +196,7 @@ public class RegistroServiceImpl implements RegistroService {
     private void validarSeJaExisteRegistroParaOPeriodo(Registro registro, List<Registro> registrosJaCadastradosParaODia) {
         registrosJaCadastradosParaODia.forEach(registroCadastrado -> {
             if (registroCadastrado.getTipoPeriodo().getId().equals(registro.getTipoPeriodo().getId())
-            && registroCadastrado.getTipoRegistro().getId().equals(registro.getTipoRegistro().getId()))
+                    && registroCadastrado.getTipoRegistro().getId().equals(registro.getTipoRegistro().getId()))
                 throw new ValidacaoException(getMessage("msg.erro.registro.01"));
         });
     }
