@@ -67,9 +67,9 @@ Esta API foi criada com intuito de atender o desafio backend proposto pela AIS D
 
 
 ## Consideracoes
-O desafio, apesar de uma proposta simples, não é de fato trivial. A criação do projeto por completo envolveu várias habilidades como: tratamento e manipulação de datas, validação de regras de negócio, mapeamento de entidades, documentação, versionamento, testes, e principalmente, o design de uma API a partir de um problema.
+O desafio, apesar de uma proposta simples, não é de fato trivial. A criação do projeto por completo envolveu várias habilidades como: tratamento e manipulação de datas, validação de regras de negócio, mapeamento de entidades, documentação, versionamento, transações, testes, e principalmente, o design de uma API a partir de um problema.
 
-O curto período de tempo para desenvolvimento também faz com que priorizemos certas atividades e acabemos deixando outras para posterior melhoria. 
+O curto período de tempo para desenvolvimento também faz com que priorizemos certas atividades e acabemos deixando outras para posterior melhoria. A propósito, uma melhoria feita foi a de obtenção de todos os registros de um usuário dado um determinado mês-ano.
 
 Experimentei utilizar alguns recursos que ainda não havia utilizado como MapStruct e Gitmoji, e cairam como uma luva!
 
